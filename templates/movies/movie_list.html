@@ -13,6 +13,17 @@
                     <p class="muted">
                         {{ movie.description|default:"No description yet." }}
                     </p>
+
+                    {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'add_to_watchlist' movie.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">Add to Watchlist</button>
+                        </form>
+                    {% else %}
+                        <p>
+                            <a href="{% url 'login' %}">Log in to save this movie</a>
+                        </p>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>

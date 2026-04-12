@@ -119,3 +119,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Authentication redirects
+LOGIN_REDIRECT_URL = "movie_list"
+LOGOUT_REDIRECT_URL = "movie_list"

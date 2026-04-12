@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2 class="page-title">My Watchlist</h2>
+
+    {% if entries %}
+        <div class="card-grid">
+            {% for entry in entries %}
+                <div class="card">
+                    <h3>{{ entry.movie.title }}</h3>
+                    <p><strong>Year:</strong> {{ entry.movie.year }}</p>
+                    <p><strong>Genre:</strong> {{ entry.movie.genre }}</p>
+                    <p>{{ entry.movie.description }}</p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {% if entry.watched %}Watched{% else %}Not watched{% endif %}
+                    </p>
+                    <p>
+                        <strong>Favorite:</strong>
+                        {% if entry.favorite %}Yes{% else %}No{% endif %}
+                    </p>
+
+                    <div class="card-actions">
+                        <form method="post" action="{% url 'toggle_watched' entry.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">
+                                {% if entry.watched %}
+                                    Mark Unwatched
+                                {% else %}
+                                    Mark Watched
+                                {% endif %}
+                            </button>
+                        </form>
+
+                        <form method="post" action="{% url 'toggle_favorite' entry.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">
+                                {% if entry.favorite %}
+                                    Remove Favorite
+                                {% else %}
+                                    Mark Favorite
+                                {% endif %}
+                            </button>
+                        </form>
+
+                        <form method="post" action="{% url 'remove_from_watchlist' entry.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Your watchlist is empty.</p>
+    {% endif %}
+{% endblock %}

@@ -49,20 +49,22 @@ a:hover {
 }
 
 .nav form {
-    display: inline;
+    margin: 0;
 }
 
 .nav button {
-    background: #2b59c3;
+    background: #3124ea;
     color: white;
     border: none;
-    padding: 0.5rem 0.9rem;
+    padding: 0.55rem 0.95rem;
     border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    line-height: 1;
 }
 
 .nav button:hover {
-    background: #1f469c;
+    background: #2a1ecf;
 }
 
 .page {
@@ -71,37 +73,44 @@ a:hover {
 
 .page-title {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 2rem;
+    color: #111827;
 }
 
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
 }
 
 .card {
     background: white;
-    border-radius: 14px;
-    padding: 1rem;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
 }
 
 .card h3 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.45rem;
+    color: #111827;
 }
 
 .card p {
-    margin: 0.3rem 0;
+    margin: 0.35rem 0;
     color: #444;
+    line-height: 1.45;
 }
 
 .form-card {
     background: white;
-    border-radius: 14px;
-    padding: 1.25rem;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e5e7eb;
     max-width: 700px;
 }
 
@@ -113,27 +122,102 @@ form input,
 form textarea,
 form select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.8rem 0.9rem;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border-radius: 10px;
     margin-top: 0.35rem;
+    font-size: 1rem;
+    background: white;
+}
+
+form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.card-actions form {
+    margin: 0;
 }
 
 .btn {
-    display: inline-block;
-    background: #2b59c3;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #3124ea;
     color: white;
     border: none;
-    padding: 0.75rem 1rem;
+    padding: 0.55rem 0.85rem;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .btn:hover {
-    background: #1f469c;
+    background: #1d1486;
+    text-decoration: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background: #3124ea;
+}
+
+.btn-secondary:hover {
+    background: #2a1ecf;
+}
+
+.btn-danger {
+    background: #8d1818;
+}
+
+.btn-danger:hover {
+    background: #721313;
 }
 
 .muted {
     color: #666;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 420px));
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.card-actions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+.card-actions form {
+    margin: 0;
+    display: inline;
+}
+
+.card-actions .btn {
+    width: auto;
+    min-width: 120px;
+}
+
+.card {
+    align-self: start;
 }
