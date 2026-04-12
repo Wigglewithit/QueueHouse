@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Welcome to QueueHouse</h2>
-    <p>Track movies, build a watchlist, and mark what you have watched.</p>
+    <div class="card">
+        <h2 class="page-title">Welcome to QueueHouse</h2>
+        <p>Build your watchlist, track what you have watched, and organize favorite movies.</p>
+        <p>
+            <a href="{% url 'movie_list' %}" class="btn">Browse Movies</a>
+        </p>
+    </div>
 {% endblock %}

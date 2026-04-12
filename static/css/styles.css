@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f7;
+    color: #222;
+}
+
+a {
+    text-decoration: none;
+    color: #2b59c3;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.site-header {
+    background: #111827;
+    color: white;
+    padding: 1rem 0;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+.brand a {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.nav {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav a {
+    color: white;
+    font-weight: 500;
+}
+
+.nav form {
+    display: inline;
+}
+
+.nav button {
+    background: #2b59c3;
+    color: white;
+    border: none;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav button:hover {
+    background: #1f469c;
+}
+
+.page {
+    padding: 2rem 0;
+}
+
+.page-title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 1rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    margin: 0.3rem 0;
+    color: #444;
+}
+
+.form-card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+    max-width: 700px;
+}
+
+form p {
+    margin-bottom: 1rem;
+}
+
+form input,
+form textarea,
+form select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-top: 0.35rem;
+}
+
+.btn {
+    display: inline-block;
+    background: #2b59c3;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #1f469c;
+}
+
+.muted {
+    color: #666;
+}

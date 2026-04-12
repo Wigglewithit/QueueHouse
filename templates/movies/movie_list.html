@@ -1,15 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>Movies</h2>
+    <h2 class="page-title">Movies</h2>
 
     {% if movies %}
-        <ul>
+        <div class="card-grid">
             {% for movie in movies %}
-                <li>{{ movie.title }}{% if movie.year %} ({{ movie.year }}){% endif %}</li>
+                <div class="card">
+                    <h3>{{ movie.title }}</h3>
+                    <p><strong>Year:</strong> {{ movie.year|default:"Unknown" }}</p>
+                    <p><strong>Genre:</strong> {{ movie.genre|default:"Not set" }}</p>
+                    <p class="muted">
+                        {{ movie.description|default:"No description yet." }}
+                    </p>
+                </div>
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
-        <p>No movies added yet.</p>
+        <div class="card">
+            <p>No movies added yet.</p>
+        </div>
     {% endif %}
 {% endblock %}
