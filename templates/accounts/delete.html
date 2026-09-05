@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-card"><h1>Delete your account</h1>
+<p>This permanently deletes your account, watchlist, ratings and notes from the active database. Shared catalog movies remain. See our <a href="{% url 'privacy' %}">privacy information</a> for backup details.</p>
+<form method="post">{% csrf_token %}{{ form.non_field_errors }}
+<label for="id_password">Confirm your current password</label>
+<input id="id_password" name="password" type="password" autocomplete="current-password" required>
+<button class="btn btn-danger">Permanently delete my account</button>
+</form><p><a href="{% url 'watchlist' %}">Keep my account</a></p></div>
+{% endblock %}

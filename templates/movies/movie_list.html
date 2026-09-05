@@ -1,35 +1,27 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h2 class="page-title">Movies</h2>
-
-    {% if movies %}
-        <div class="card-grid">
-            {% for movie in movies %}
-                <div class="card">
-                    <h3>{{ movie.title }}</h3>
-                    <p><strong>Year:</strong> {{ movie.year|default:"Unknown" }}</p>
-                    <p><strong>Genre:</strong> {{ movie.genre|default:"Not set" }}</p>
-                    <p class="muted">
-                        {{ movie.description|default:"No description yet." }}
-                    </p>
-
-                    {% if user.is_authenticated %}
-                        <form method="post" action="{% url 'add_to_watchlist' movie.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn">Add to Watchlist</button>
-                        </form>
-                    {% else %}
-                        <p>
-                            <a href="{% url 'login' %}">Log in to save this movie</a>
-                        </p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="card">
-            <p>No movies added yet.</p>
-        </div>
-    {% endif %}
+<h1 class="page-title">Movies</h1>
+<form method="get" class="filters" role="search">
+    <label>Search titles<input type="search" name="q" value="{{ q }}" maxlength="200"></label>
+    <label>Genre<select name="genre"><option value="">All genres</option>
+    {% for item in genres %}<option value="{{ item }}" {% if item == genre %}selected{% endif %}>{{ item }}</option>{% endfor %}
+    </select></label>
+    <button class="btn" type="submit">Search</button>
+    <a href="{% url 'movie_list' %}">Clear</a>
+</form>
+<div class="card-grid">
+{% for movie in movies %}
+<article class="card">
+    <h2><a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a></h2>
+    <p>{{ movie.year|default:"Year unknown" }} &middot; {{ movie.genre|default:"Genre not set" }}</p>
+    <p>{{ movie.description|default:"No description yet."|truncatewords:40 }}</p>
+    {% if user.is_authenticated %}
+        {% if movie.in_watchlist %}<a href="{% url 'watchlist' %}">In your watchlist</a>
+        {% else %}<form method="post" action="{% url 'add_to_watchlist' movie.id %}">{% csrf_token %}<button class="btn">Add to Watchlist</button></form>{% endif %}
+    {% else %}<a href="{% url 'login' %}?next={% url 'movie_detail' movie.id %}">Log in to save this movie</a>{% endif %}
+</article>
+{% empty %}<p>No movies found. Try another search{% if user.is_staff %} or <a href="{% url 'add_movie' %}">add a movie</a>{% endif %}.</p>
+{% endfor %}
+</div>
+{% include 'pagination.html' %}
 {% endblock %}

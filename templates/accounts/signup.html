@@ -2,6 +2,7 @@
 
 {% block content %}
 <h2>Sign Up</h2>
+<p>We use your email for account recovery. Read our <a href="{% url 'privacy' %}">privacy information</a>.</p>
 
 <form method="post">
     {% csrf_token %}
