@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="card">
+<h1>{{ movie.title }}</h1>
+<p>{{ movie.year|default:"Year unknown" }} &middot; {{ movie.genre|default:"Genre not set" }}</p>
+<p>{{ movie.description|default:"No description yet."|linebreaksbr }}</p>
+{% if user.is_authenticated %}
+{% if in_watchlist %}<p><a href="{% url 'watchlist' %}">In your watchlist</a></p>
+{% else %}<form method="post" action="{% url 'add_to_watchlist' movie.id %}">{% csrf_token %}<button class="btn">Add to Watchlist</button></form>{% endif %}
+<h2>Your rating and notes</h2><p>These are private to your account.</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn">Save rating and notes</button></form>
+{% if review %}<form method="post" action="{% url 'delete_review' movie.id %}">{% csrf_token %}<button class="btn btn-danger">Delete rating and notes</button></form>{% endif %}
+{% else %}<p><a href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in to save this movie or write private notes.</a></p>{% endif %}
+</article>
+{% endblock %}

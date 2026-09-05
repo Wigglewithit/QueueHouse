@@ -17,7 +17,7 @@
             <nav class="nav">
                 <a href="{% url 'home' %}">Home</a>
                 <a href="{% url 'movie_list' %}">Movies</a>
-                <a href="{% url 'add_movie' %}">Add Movie</a>
+                {% if user.is_staff %}<a href="{% url 'add_movie' %}">Add Movie</a>{% endif %}
 
             {% if user.is_authenticated %}
                 <a href="{% url 'watchlist' %}">My Watchlist</a>
@@ -35,8 +35,14 @@
 
     <main class="page">
         <div class="container">
+            {% for message in messages %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
             {% block content %}{% endblock %}
         </div>
     </main>
+    <footer class="container"><nav class="footer-nav" aria-label="Help">
+        <a href="{% url 'privacy' %}">Privacy</a>
+        <a href="{% url 'support' %}">Support</a>
+        {% if user.is_authenticated %}<a href="{% url 'delete_account' %}">Delete account</a>{% endif %}
+    </nav></footer>
 </body>
 </html>

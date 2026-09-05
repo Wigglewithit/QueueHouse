@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}<article class="card"><h1>Support</h1>
+{% if support_email %}<p>Email <a href="mailto:{{ support_email }}">{{ support_email }}</a> for account help, privacy requests or bug reports.</p>
+{% else %}<p>Support contact details will be available when this service launches.</p>{% endif %}
+<p>For login problems, try <a href="{% url 'password_reset' %}">resetting your password</a>. Never send your password to support.</p>
+</article>{% endblock %}

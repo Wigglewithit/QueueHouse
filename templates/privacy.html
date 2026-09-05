@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}<article class="card"><h1>Privacy at QueueHouse</h1>
+<p>QueueHouse stores your username, email address, password hash, watchlist, ratings and notes to provide your account and movie-tracking features.</p>
+<p>Your watchlist, ratings and notes are not shown to other users. Authorized administrators can access stored records to operate and support the service.</p>
+<p>Essential cookies keep you signed in and protect forms. This application does not include advertising or analytics trackers. Hosting and email providers process data needed to run the service and deliver password-reset messages.</p>
+<p>Security logs and temporary rate limits may contain network information such as IP addresses. Never put sensitive personal information in movie notes.</p>
+<p>You can <a href="{% url 'delete_account' %}">delete your account</a> after signing in. This removes your account and associated movie-tracking data from the active database. Backup copies may remain until the operator's backup retention period expires; contact support for the applicable retention period and provider details.</p>
+<p><a href="{% url 'support' %}">Contact support</a> for access, deletion or privacy questions.</p></article>{% endblock %}

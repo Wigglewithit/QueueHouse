@@ -2,12 +2,22 @@
 
 {% block content %}
     <h2 class="page-title">My Watchlist</h2>
+    <form method="get" class="filters" role="search">
+        <label>Search your movies<input type="search" name="q" value="{{ q }}" maxlength="200"></label>
+        <label>Status<select name="status">
+            <option value="">All movies</option>
+            <option value="watched" {% if status == 'watched' %}selected{% endif %}>Watched</option>
+            <option value="unwatched" {% if status == 'unwatched' %}selected{% endif %}>Not watched</option>
+        </select></label>
+        <label>Favorites<select name="favorite"><option value="">All movies</option><option value="1" {% if favorite %}selected{% endif %}>Favorites only</option></select></label>
+        <button type="submit" class="btn">Filter</button><a href="{% url 'watchlist' %}">Clear</a>
+    </form>
 
     {% if entries %}
         <div class="card-grid">
             {% for entry in entries %}
                 <div class="card">
-                    <h3>{{ entry.movie.title }}</h3>
+                    <h3><a href="{% url 'movie_detail' entry.movie.id %}">{{ entry.movie.title }}</a></h3>
                     <p><strong>Year:</strong> {{ entry.movie.year }}</p>
                     <p><strong>Genre:</strong> {{ entry.movie.genre }}</p>
                     <p>{{ entry.movie.description }}</p>
@@ -53,6 +63,7 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>Your watchlist is empty.</p>
+        <p>No movies match this view. <a href="{% url 'movie_list' %}">Browse movies</a> or clear your filters.</p>
     {% endif %}
+    {% include 'pagination.html' %}
 {% endblock %}

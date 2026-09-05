@@ -1,0 +1,52 @@
+name: QueueHouse checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: queuehouse
+          POSTGRES_USER: queuehouse
+          POSTGRES_PASSWORD: ci-only-password
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U queuehouse"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      DJANGO_ENV: development
+      DATABASE_URL: postgresql://queuehouse:ci-only-password@localhost:5432/queuehouse
+      REDIS_URL: redis://localhost:6379/0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: pip check
+      - run: python manage.py test --settings=config.test_settings
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py migrate --noinput
+      - run: python manage.py import_movies data/starter_movies.csv
+      - run: python manage.py collectstatic --noinput
+      - name: Check production settings
+        env:
+          DJANGO_ENV: production
+          DJANGO_SECRET_KEY: ci-only-not-a-real-secret-0123456789-abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ
+          DJANGO_ALLOWED_HOSTS: queuehouse.example
+          EMAIL_HOST: smtp.example.com
+          DEFAULT_FROM_EMAIL: noreply@example.com
+          SUPPORT_EMAIL: support@example.com
+          DJANGO_HSTS_INCLUDE_SUBDOMAINS: "true"
+          DJANGO_HSTS_PRELOAD: "true"
+        run: python manage.py check --deploy --fail-level WARNING

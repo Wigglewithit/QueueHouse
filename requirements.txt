@@ -1,0 +1,14 @@
+# Resolved from requirements.in with Python 3.12. Update pins together and run CI.
+asgiref==3.12.1
+dj-database-url==3.1.2
+Django==6.0.8
+django-ratelimit==4.1.0
+psycopg==3.3.5
+psycopg-binary==3.3.5
+redis==6.4.0
+sqlparse==0.6.0
+typing_extensions==4.16.0
+tzdata==2026.3
+whitenoise==6.12.0
+gunicorn==26.2.0; sys_platform != "win32"
+packaging==25.0
