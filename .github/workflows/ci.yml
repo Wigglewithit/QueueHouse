@@ -50,3 +50,28 @@ jobs:
           DJANGO_HSTS_INCLUDE_SUBDOMAINS: "true"
           DJANGO_HSTS_PRELOAD: "true"
         run: python manage.py check --deploy --fail-level WARNING
+      - name: Build deployment image
+        run: docker build --tag queuehouse:ci .
+      - name: Smoke test production container
+        env:
+          DJANGO_SECRET_KEY: ci-only-not-a-real-secret-0123456789-abcdefghijklmnopqrstuvwxyz-ABCDEFGHIJKLMNOPQRSTUVWXYZ
+          EMAIL_HOST: smtp.example.com
+          DEFAULT_FROM_EMAIL: noreply@example.com
+          SUPPORT_EMAIL: support@example.com
+        run: |
+          docker run --detach --name queuehouse-smoke --network host \
+            --env DJANGO_ENV=production --env DJANGO_SECRET_KEY \
+            --env DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1 \
+            --env DATABASE_URL --env REDIS_URL --env EMAIL_HOST \
+            --env DEFAULT_FROM_EMAIL --env SUPPORT_EMAIL \
+            --env DJANGO_TRUST_PROXY=true queuehouse:ci
+          curl --fail --silent --show-error --retry 10 --retry-connrefused \
+            --retry-delay 1 --header 'X-Forwarded-Proto: https' \
+            http://127.0.0.1:8000/movies/ > /dev/null
+      - name: Container logs and cleanup
+        if: always()
+        run: |
+          if docker inspect queuehouse-smoke > /dev/null 2>&1; then
+            docker logs queuehouse-smoke
+            docker rm --force queuehouse-smoke
+          fi
